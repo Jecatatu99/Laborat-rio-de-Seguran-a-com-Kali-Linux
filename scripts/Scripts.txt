@@ -1,0 +1,4 @@
+Scripts
+Esta pasta será utilizada para armazenar scripts e arquivos de automação empregados no laboratório.
+
+Todos os scripts deste projeto deverão ser executados exclusivamente em ambiente virtual, isolado e autorizado.

@@ -1,0 +1,19 @@
+Diário do laboratório
+
+Informações gerais
+Nome do projeto: Laboratório de Segurança com Kali Linux e Medusa
+Autor: Jean Carlos Kovaliki
+Finalidade: Educacional
+Ambiente: Máquinas virtuais isoladas
+
+Etapa 1: organização do projeto
+Atividade realizada
+Foi criada a estrutura inicial do projeto, incluindo as pastas para imagens, wordlists, documentos e scripts.
+
+Também foi criado o arquivo README.md para registrar as configurações, os testes, os resultados e os aprendizados obtidos durante o laboratório.
+
+Resultado
+A estrutura inicial do projeto foi criada com sucesso.
+
+Dificuldades encontradas
+Nenhuma dificuldade encontrada nesta etapa.
