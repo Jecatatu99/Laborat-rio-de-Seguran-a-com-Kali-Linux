@@ -1,4 +1,4 @@
-# Auditoria de Autenticação com Kali Linux e Medusa
+# Laboratório de Segurança com Kali Linux e Medusa
 
 ![Status](https://img.shields.io/badge/status-concluído-brightgreen)
 ![Finalidade](https://img.shields.io/badge/finalidade-educacional-blue)
@@ -55,7 +55,7 @@ As wordlists foram mantidas pequenas e continham apenas valores fictícios ou cr
 +-------------------------+       Rede Host-Only       +-------------------------+
 |       Kali Linux        | <------------------------> |    Metasploitable 2     |
 | Máquina de auditoria    |                            | Máquina vulnerável      |
-| IP: [IP_DO_KALI]        |                            | IP: [IP_DO_ALVO]        |
+|    |                            |       |
 +-------------------------+                            +-------------------------+
                                                               |
                                                               +-- FTP
@@ -63,29 +63,8 @@ As wordlists foram mantidas pequenas e continham apenas valores fictícios ou cr
                                                               +-- SMB
 ```
 
-> Substitua `[IP_DO_KALI]` e `[IP_DO_ALVO]` pelos endereços privados utilizados no seu laboratório.
 
-## Estrutura do repositório
 
-```text
-medusa-kali-brute-force/
-├── README.md
-├── wordlists/
-│   ├── senhas-ftp.txt
-│   ├── senhas-dvwa.txt
-│   ├── usuarios-smb.txt
-│   └── senha-smb.txt
-├── docs/
-│   ├── etapa-10-ftp.md
-│   ├── etapa-11-dvwa.md
-│   ├── etapa-12-smb.md
-│   └── etapa-13-medidas-de-mitigacao.md
-└── images/
-    ├── configuracao/
-    ├── etapa-10-ftp/
-    ├── etapa-11-dvwa/
-    ├── etapa-12-smb/
-    └── etapa-13-mitigacao/
 ```
 
 ## Etapas realizadas
@@ -110,31 +89,30 @@ As duas máquinas foram conectadas a uma rede **Host-Only**, mantendo o laborat�
 Os endereços privados das máquinas foram identificados e registrados.
 
 ```text
-Kali Linux:       [IP_DO_KALI]
-Metasploitable 2: [IP_DO_ALVO]
+Kali Linux:      192.168.56.101
+Metasploitable 2: 192.168.56.101
 ```
 
-![Endereços IP](./images/configuracao/02-enderecos-ip.png)
 
 ### 4. Teste de conectividade
 
 A comunicação entre as máquinas foi validada com um teste de ping. O resultado confirmou que o Kali Linux conseguia alcançar o Metasploitable 2 pela rede isolada.
 
 ```bash
-ping -c 4 [IP_DO_ALVO]
+ping -c 4 192.168.56.101
 ```
 
-![Teste de conectividade](./images/configuracao/03-teste-ping.png)
+
 
 ### 5. Identificação dos serviços
 
 Foi realizada uma verificação no endereço privado do Metasploitable 2 para identificar os serviços disponíveis no laboratório. Foram observados os serviços necessários para os cenários de FTP, Web e SMB.
 
 ```bash
-nmap -sV [IP_DO_ALVO]
+nmap -sV 192.168.56.101
 ```
 
-![Identificação dos serviços](./images/configuracao/04-identificacao-servicos.png)
+
 
 > Somente o endereço privado da máquina vulnerável do laboratório foi analisado.
 
@@ -166,28 +144,6 @@ A ferramenta Medusa foi utilizada com o módulo correspondente ao serviço FTP. 
 
 O resultado demonstrou que uma credencial fraca poderia ser identificada no ambiente intencionalmente vulnerável. A autenticação foi validada sem alteração, exclusão ou transferência de arquivos.
 
-### Evidências
-
-#### Serviço FTP identificado
-
-![Serviço FTP](./images/etapa-10-ftp/03-porta-ftp.png)
-
-#### Wordlist utilizada
-
-![Wordlist FTP](./images/etapa-10-ftp/04-wordlist-ftp.png)
-
-#### Execução controlada
-
-![Execução FTP](./images/etapa-10-ftp/05-teste-controlado-ftp.png)
-
-#### Resultado
-
-![Resultado FTP](./images/etapa-10-ftp/06-resultado-credencial.png)
-
-#### Validação autorizada
-
-![Validação FTP](./images/etapa-10-ftp/07-validacao-acesso-ftp.png)
-
 ### Análise
 
 O cenário demonstrou que uma senha previsível, combinada com a ausência de limitação de tentativas, pode permitir o comprometimento de uma conta. Também mostrou a importância de substituir protocolos sem proteção adequada por alternativas seguras.
@@ -213,32 +169,6 @@ wordlists/senhas-dvwa.txt
 Foram comparadas as respostas apresentadas pelo formulário após uma tentativa rejeitada e uma tentativa aceita. No nível Low, não foi observado um mecanismo efetivo de bloqueio temporário durante o teste.
 
 A diferença entre as respostas permitiu identificar quando uma combinação de usuário e senha era aceita.
-
-### Evidências
-
-#### Acesso ao DVWA
-
-![Acesso ao DVWA](./images/etapa-11-dvwa/01-acesso-dvwa.png)
-
-#### Nível de segurança Low
-
-![DVWA Security Low](./images/etapa-11-dvwa/02-dvwa-security-low.png)
-
-#### Módulo Brute Force
-
-![Módulo Brute Force](./images/etapa-11-dvwa/03-modulo-brute-force.png)
-
-#### Wordlist utilizada
-
-![Wordlist DVWA](./images/etapa-11-dvwa/04-wordlist-dvwa.png)
-
-#### Tentativa rejeitada
-
-![Tentativa rejeitada](./images/etapa-11-dvwa/05-tentativa-incorreta.png)
-
-#### Tentativa aceita
-
-![Tentativa aceita](./images/etapa-11-dvwa/06-tentativa-sucesso.png)
 
 ### Análise
 
@@ -267,29 +197,6 @@ Nenhum usuário pessoal, corporativo ou externo foi incluído.
 
 O teste utilizou o módulo SMBNT do Medusa, uma única senha didática e poucos usuários do próprio laboratório. A quantidade de tentativas foi mantida baixa.
 
-**Resultado observado:** `[DESCREVA AQUI SE UMA CREDENCIAL FOI ACEITA OU NÃO]`.
-
-### Evidências
-
-#### Serviço SMB identificado
-
-![Serviço SMB](./images/etapa-12-smb/02-identificacao-portas-smb.png)
-
-#### Enumeração autorizada
-
-![Enumeração SMB](./images/etapa-12-smb/03-enumeracao-laboratorio.png)
-
-#### Lista reduzida de usuários
-
-![Usuários SMB](./images/etapa-12-smb/04-lista-usuarios-smb.png)
-
-#### Execução controlada
-
-![Execução SMB](./images/etapa-12-smb/06-execucao-password-spraying.png)
-
-#### Resultado
-
-![Resultado SMB](./images/etapa-12-smb/07-resultado-smb.png)
 
 ### Análise
 
@@ -408,12 +315,3 @@ A principal conclusão é que a defesa deve utilizar várias camadas: senhas exc
 - [OWASP Authentication Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html)
 - [GitHub Markdown](https://docs.github.com/pt/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
 
-## Autor
-
-**Jean Carlos Kovaliki**
-
-Estudante de Engenharia de Software.
-
----
-
-Se este projeto foi útil para seus estudos, considere marcar o repositório com uma estrela.
